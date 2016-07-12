@@ -1,0 +1,32 @@
+# -*- mode: conf -*-
+# sudoers files - managed with chef
+
+root ALL = (ALL) ALL
+bb ALL = (root) NOPASSWD: /sbin/tw_cli, /opt/storcli/storcli, /usr/bin/qshape.pl, /usr/local/meetup/tools/jython, /usr/sbin/ipmitool, /usr/sbin/pmta
+<% if @queue -%>
+bb ALL = (rabbitmq) NOPASSWD: /usr/local/rabbitmq-server/sbin/rabbitmqctl
+<% end -%>
+
+cacti ALL = (root) NOPASSWD: /usr/local/ipvsadm/ipvsadm
+
+<% if @dns -%>
+%tech ALL = (root) NOPASSWD: /usr/sbin/rndc, /etc/init.d/named
+<% end -%>
+<% if @jobs -%>
+%tech ALL = (root) NOPASSWD: /bin/su
+<% end -%>
+
+%tech ALL = (ALL) NOPASSWD: /bin/su - meetcvs
+%hadoop ALL = (ALL) NOPASSWD: /bin/su - hadoop
+
+Defaults:qing env_keep+="HOME LS_COLORS"
+qing ALL=(ALL) NOPASSWD: ALL
+icorbett ALL=(ALL) NOPASSWD: ALL
+wayne ALL=(ALL) NOPASSWD: ALL
+brandon ALL=(ALL) NOPASSWD: ALL
+<% if node.chef_environment.match("^dev|qa|stage$") -%>
+lev ALL=(ALL) NOPASSWD: ALL
+troy ALL=(ALL) NOPASSWD: ALL
+arnaud ALL=(ALL) NOPASSWD: ALL
+lena ALL=(ALL) NOPASSWD: ALL
+<% end -%>

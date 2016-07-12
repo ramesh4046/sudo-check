@@ -1,0 +1,43 @@
+# -*- mode: conf -*-
+# sudoers files - managed with chef
+
+Host_Alias DNS_SERVERS = lb0, lb1
+Host_Alias QUEUE_SERVERS = queue0, queue1
+Host_Alias ALLOW_TECH_SU_SERVERS = jobs
+
+User_Alias TECH = icorbett, lev, brandon
+User_Alias DATA = nathanh, evan, osheim, jmarcus, bgruber
+
+Cmnd_Alias SU = /bin/su
+
+Cmnd_Alias SHELLS = /bin/ash, /bin/csh, /bin/sh, /usr/bin/es, /usr/bin/ksh, /bin/ksh, \
+                    /usr/bin/rc, /usr/bin/zsh, /bin/sash, /bin/zsh, /usr/bin/esh, \
+                    /usr/bin/screen, /bin/bash, /bin/rbash, /bin/dash
+
+root ALL = (ALL) ALL
+bb ALL = (root) NOPASSWD: /sbin/tw_cli, /usr/bin/qshape.pl, /usr/local/meetup/tools/jython, /usr/sbin/ipmitool, /usr/sbin/pmta
+bb ALL = (rabbitmq) NOPASSWD: /usr/local/rabbitmq-server/sbin/rabbitmqctl
+
+cacti ALL = (root) NOPASSWD: /usr/local/ipvsadm/ipvsadm
+
+%tech DNS_SERVERS = (root) NOPASSWD: /usr/sbin/rndc, /etc/init.d/named
+%tech ALLOW_TECH_SU_SERVERS = (root) NOPASSWD: /bin/su
+
+TECH ALL=(ALL) NOPASSWD: ALL, !SU, !SHELLS
+DATA ALL = (ALL) NOPASSWD: /bin/su
+
+Defaults:qing env_keep+="HOME LS_COLORS"
+qing ALL=(ALL) NOPASSWD: ALL
+icorbett ALL=(ALL) NOPASSWD: ALL
+arnaud ALL=(ALL) NOPASSWD: ALL
+wayne ALL=(ALL) NOPASSWD: ALL
+lev ALL=(ALL) NOPASSWD: ALL
+troy ALL=(ALL) NOPASSWD: ALL
+brandon ALL=(ALL) NOPASSWD: ALL
+
+danjw ALL=(ALL) NOPASSWD: ALL
+bgruber ALL=(ALL) NOPASSWD: ALL
+evan ALL=(ALL) NOPASSWD: ALL
+aashish ALL=(ALL) NOPASSWD: ALL
+jmarcus ALL=(ALL) NOPASSWD: ALL
+osheim ALL=(ALL) NOPASSWD: ALL
